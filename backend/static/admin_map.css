@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#map {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Marker colors */
+.priority-high {
+  background: #d32f2f;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.priority-medium {
+  background: #fbc02d;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}
+
+.priority-low {
+  background: #388e3c;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zebla wel Kharouba – Map</title>
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    #container { display: flex; height: 100vh; }
+    #panel {
+      width: 320px;
+      padding: 15px;
+      background: #fff;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    }
+    #map { flex: 1; }
+    input, button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+    button {
+      background: #1976d2;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover { background: #125aa0; }
+  </style>
+</head>
+
+<body>
+<div id="container">
+  <div id="panel">
+    <h3>📍 Address</h3>
+
+    <input id="address" placeholder="Street / City">
+    <input id="country" placeholder="Country" value="Tunisia">
+
+    <button onclick="searchAddress()">Confirm</button>
+    <button onclick="locateMe()">📡 Locate Me</button>
+  </div>
+
+  <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/static/map_leaflet.js"></script>
+</body>
+</html>

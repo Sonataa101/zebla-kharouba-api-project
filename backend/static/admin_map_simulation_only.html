@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Simulation</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // Simulate localStorage token
+        localStorage.setItem("access_token", "simulated-jwt-token");
+
+        // Simulated report data (replaces fetch)
+        const simulatedData = [
+            {
+                id: "1",
+                lat: 36.8065,
+                lng: 10.1815,
+                problem_type: "Road Damage",
+                priority: "HIGH",
+                score: 8.7,
+                status: "Open",
+                description: "Major pothole on main avenue causing accidents."
+            },
+            {
+                id: "2",
+                lat: 36.85,
+                lng: 10.25,
+                problem_type: "Waste",
+                priority: "MEDIUM",
+                score: 6.2,
+                status: "In Progress",
+                description: "Illegal dumping site accumulating trash."
+            },
+            {
+                id: "3",
+                lat: 36.75,
+                lng: 10.1,
+                problem_type: "Lighting",
+                priority: "LOW",
+                score: 4.1,
+                status: "Closed",
+                description: "Street light flickering at night."
+            },
+            {
+                id: "4",
+                lat: 36.82,
+                lng: 10.22,
+                problem_type: "Flooding",
+                priority: "HIGH",
+                score: 9.2,
+                status: "Open",
+                description: "Drainage issue after rain causing flooding."
+            }
+        ];
+
+        const map = L.map("map").setView([36.8, 10.18], 10);
+
+        // OpenStreetMap tiles
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+        }).addTo(map);
+
+        // Cluster group
+        const clusters = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            maxClusterRadius: 60
+        });
+
+        function getColor(priority) {
+            if (priority === "HIGH") return "red";
+            if (priority === "MEDIUM") return "orange";
+            return "green";
+        }
+
+        // Simulate fetch response processing
+        simulatedData.forEach(r => {
+            const marker = L.circleMarker([r.lat, r.lng], {
+                radius: 8,
+                color: getColor(r.priority),
+                fillOpacity: 0.85,
+                fillColor: getColor(r.priority),
+                weight: 2
+            });
+
+            marker.bindPopup(`
+                <b>${r.problem_type.toUpperCase()}</b><br/>
+                Priority: ${r.priority}<br/>
+                Score: ${r.score}<br/>
+                Status: ${r.status}<br/><br/>
+                ${r.description}<br/><br/>
+                <button onclick="promise('${r.id}')" style="padding: 5px 10px; background: #007cba; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    Make Promise
+                </button>
+            `);
+
+            clusters.addLayer(marker);
+        });
+
+        map.addLayer(clusters);
+
+        // Global promise function (simulates redirect with alert)
+        window.promise = function(reportId) {
+            alert(`Redirecting to promise.html?report=${reportId}\n(Simulation: Report ID ${reportId} selected)`);
+            // Uncomment for actual redirect: window.location.href = `/promise.html?report=${reportId}`;
+        };
+
+        console.log("Map simulation loaded successfully!");
+    </script>
+</body>
+</html>
