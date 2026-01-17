@@ -1,0 +1,14 @@
+services:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"           # optional - for direct backend testing
+    environment:
+      - NODE_ENV=production
+      # Add your real environment variables here!
+      # - DATABASE_URL=...
+      # - JWT_SECRET=...
+    restart: unless-stopped
